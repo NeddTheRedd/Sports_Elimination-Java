@@ -1,17 +1,10 @@
-/* BaseballElimination.java
-   CSC 226 - Fall 2023
-   Assignment 5 - Baseball Elimination Program
-   
-   This template includes some testing code to help verify the implementation.
-   To interactively provide test inputs, run the program with
-	java BaseballElimination
-	
+/*
    To conveniently test the algorithm with a large input, create a text file
    containing one or more test divisions (in the format described below) and run
    the program with
 	java -cp .;algs4.jar BaseballElimination file.txt (Windows)
    or
-    java -cp .:algs4.jar BaseballElimination file.txt (Linux or Mac)
+	java -cp .:algs4.jar BaseballElimination file.txt (Linux or Mac)
    where file.txt is replaced by the name of the text file.
    
    The input consists of an integer representing the number of teams in the division and then
