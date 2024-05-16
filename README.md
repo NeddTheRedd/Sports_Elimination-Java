@@ -14,7 +14,11 @@ file.txt is replaced with the path to a test file from the [test_files](https://
 
 #### EXAMPLE: 
 
-<img width="375" alt="Screen Shot 2024-05-15 at 6 55 13 PM" src="https://github.com/NeddTheRedd/Sports_Elimination-Java/assets/153869055/08d426b5-0e78-49e8-9a04-dd9dd147a94e">
+Input:<br>
 
-<img width="1116" alt="Screen Shot 2024-05-15 at 6 55 44 PM" src="https://github.com/NeddTheRedd/Sports_Elimination-Java/assets/153869055/209d32d7-dee8-43ef-afa4-46919acd6715">
+<img width="375" alt="Screen Shot 2024-05-15 at 6 55 13 PM" src="https://github.com/NeddTheRedd/Sports_Elimination-Java/assets/153869055/08d426b5-0e78-49e8-9a04-dd9dd147a94e"><br>
+
+Output:<br>
+
+<img width="1116" alt="Screen Shot 2024-05-15 at 6 55 44 PM" src="https://github.com/NeddTheRedd/Sports_Elimination-Java/assets/153869055/209d32d7-dee8-43ef-afa4-46919acd6715"><br>
 
