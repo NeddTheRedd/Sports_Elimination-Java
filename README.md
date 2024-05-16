@@ -10,7 +10,7 @@ Java program that determines the teams that have been mathematically eliminated 
    * java -cp .;algs4.jar BaseballElimination file.txt (Windows)
    * java -cp .:algs4.jar BaseballElimination file.txt (Linux or Mac) <br>
 
-Where file.txt is replaced with the path to a test file from the 'test_files' directory.
+file.txt is replaced with the path to a test file from the [test_files](https://github.com/NeddTheRedd/Sports_Elimination-Java/tree/main/test_files) directory.
 
 #### EXAMPLE: 
 
