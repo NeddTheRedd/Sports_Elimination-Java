@@ -39,13 +39,12 @@ public class BaseballElimination {
 	 * from the playoffs. For each team in each division we create a flow network
 	 * and determine the maxflow in that network. If the maxflow exceeds the number
 	 * of inter-divisional games between all other teams in the division, the
-	 * current
-	 * team is eliminated.
+	 * current team is eliminated.
 	 */
 	public BaseballElimination(Scanner s) {
 		int numRows = s.nextInt();
 		int numColumns = numRows + 3;
-		// skip rest of first line
+		// Skip rest of first line
 		s.nextLine();
 
 		// Check if there is only one team in the division
@@ -54,16 +53,16 @@ public class BaseballElimination {
 		}
 
 		Map<Integer, String> countryRowMap = new HashMap<>();
-		// track currently eliminated
+		// Track currently eliminated
 		ArrayList<String> curEliminated = new ArrayList<String>();
 
-		// populate a league matrix
+		// Populate a league matrix
 		int[][] matrix = new int[numRows][numColumns];
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numColumns; j++) {
 				if (j == 0) {
 					matrix[i][j] = i + 1;
-					// populate hashmap with (country -> row number)
+					// Populate hashmap with (country -> row number)
 					String countryName = s.next();
 					countryRowMap.put(i + 1, countryName);
 				} else {
@@ -74,13 +73,13 @@ public class BaseballElimination {
 				s.nextLine();
 			}
 		}
-		// create an array of games played + games remaining
+		// Create an array of games played + games remaining
 		ArrayList<Integer> numGames = new ArrayList<Integer>();
 		for (int i = 0; i < numRows; i++) {
 			numGames.add(matrix[i][1] + matrix[i][2]);
 		}
 
-		// add to eliminated if W < wi
+		// Add to eliminated if W < wi
 		for (int i = 0; i < numRows; i++) {
 			for (int j = 0; j < numRows; j++) {
 				if (numGames.get(j) < matrix[i][1] && !curEliminated.contains(countryRowMap.get(j + 1))) {
@@ -89,31 +88,31 @@ public class BaseballElimination {
 			}
 		}
 
-		// determines formula for the number match vertices
+		// Determines formula for the number match vertices
 		int teamCombinations = chooseOperation((numRows - 1), 2);
 
-		// definitions:
+		// Definitions:
 		int source = 0;
 		int sink = teamCombinations + numRows + 1;
 		int vsTeam = 1;
 		int teams = 1;
 
-		// arrays and maps
+		// Arrays and maps
 		Map<String, FlowNetwork> leagueNetworks = new HashMap<>();
 		List<int[][]> teamMatrices = new ArrayList<>();
 		int[][] teamMatrix = new int[numRows - 1][numColumns - 1];
 
-		// populate teamMatrices with current team data removed
+		// Populate teamMatrices with current team data removed
 		for (int i = 0; i < numRows; i++) {
 			teamMatrix = removeRowAndColumn(matrix, i, i + 3);
 			teamMatrices.add(teamMatrix);
 		}
 
-		// create flow edges and flow networks
+		// Create flow edges and flow networks
 		for (int teamIndex = 0; teamIndex < teamMatrices.size(); teamIndex++) {
 			if (!curEliminated.contains(countryRowMap.get(teamIndex + 1))) {
 				FlowNetwork teamNetwork = new FlowNetwork(sink);
-				// create network for country i
+				// Create network for country i
 				for (int i = 0; i < numRows - 2; i++) {
 					for (int j = i; j < numRows - 2; j++) {
 						FlowEdge divisionalGame = new FlowEdge(source, vsTeam,
@@ -132,13 +131,13 @@ public class BaseballElimination {
 						if (teams >= numRows - 1) {
 							teams = 1;
 						}
-						// add to teamNetwork
+						// Add to teamNetwork
 						teamNetwork.addEdge(divisionalGame);
 						teamNetwork.addEdge(team_a);
 						teamNetwork.addEdge(team_b);
 					}
 				}
-				// add edges that connect to the sink
+				// Add edges that connect to the sink
 				for (int k = 0; k < numRows - 1; k++) {
 					double capacity = (double) (matrix[teamIndex][1] + matrix[teamIndex][2]
 							- teamMatrices.get(teamIndex)[k][1]);
@@ -152,7 +151,7 @@ public class BaseballElimination {
 				String mapAsString = leagueNetworks.entrySet().toString();
 			}
 		}
-		// check if the flow value for each network matches the sum capacity of the
+		// Check if the flow value for each network matches the sum capacity of the
 		// edges leaving the source
 		for (int i = 0; i < countryRowMap.size(); i++) {
 			if (leagueNetworks.containsKey(countryRowMap.get(i + 1))) {
@@ -160,19 +159,19 @@ public class BaseballElimination {
 				FordFulkerson curTeamNetwork = new FordFulkerson(curFlowNet, source, sink - 1);
 				double value = curTeamNetwork.value();
 
-				// get the adjacency list of the source vertex
+				// Get the adjacency list of the source vertex
 				Iterable<FlowEdge> sourceEdges = curFlowNet.adj(source);
 				double totalCap = 0;
 				for (FlowEdge edge : sourceEdges) {
 					totalCap += edge.capacity();
 				}
-				// add to eliminated array
+				// Add to eliminated array
 				if (value != totalCap) {
 					curEliminated.add(countryRowMap.get(i + 1));
 				}
 			}
 		}
-		// sort them according to their key value in countryRowMap
+		// Sort them according to their key value in countryRowMap
 		for (int i = 1; i <= numRows; i++) {
 			if (curEliminated.contains(countryRowMap.get(i))) {
 				eliminated.add(countryRowMap.get(i));
@@ -180,9 +179,9 @@ public class BaseballElimination {
 		}
 	}
 
-	// function to calculate C(n, r)
+	// Function to calculate C(n, r)
 	public static int chooseOperation(int n, int r) {
-		// base cases
+		// Base cases
 		if (r == 0 || r == n) {
 			return 1;
 		} else {
@@ -195,14 +194,14 @@ public class BaseballElimination {
 		int numCols = matrix[0].length - 1;
 		int[][] newMatrix = new int[numRows][numCols];
 
-		// make new matrix
+		// Make new matrix
 		for (int i = 0, newRow = 0; i < matrix.length; i++) {
-			// skip rowIndex
+			// Skip rowIndex
 			if (i == rowIndex) {
 				continue;
 			}
 			for (int j = 0, newCol = 0; j < matrix[0].length; j++) {
-				// skip colIndex
+				// Skip colIndex
 				if (j == colIndex) {
 					continue;
 				}
